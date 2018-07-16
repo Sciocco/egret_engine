@@ -1,0 +1,3 @@
+class LoadingScene extends BaseScene {
+    
+}

@@ -20,6 +20,11 @@ var MainLayer = (function () {
      */
     MainLayer.UI_Main = new BaseEuiLayer();
     /**
+     * UI 小地图
+     * @type {BaseEuiLayer}
+     */
+    MainLayer.UI_MiniMap = new BaseEuiLayer();
+    /**
      * UI弹出框层
      * @type {BaseEuiLayer}
      */

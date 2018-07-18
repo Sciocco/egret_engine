@@ -1,4 +1,4 @@
 enum ViewConst {
     Loading = 1000,
-    Start = 1001
+    GameView = 1001
 }

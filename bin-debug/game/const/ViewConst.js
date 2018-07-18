@@ -1,6 +1,6 @@
 var ViewConst;
 (function (ViewConst) {
     ViewConst[ViewConst["Loading"] = 1000] = "Loading";
-    ViewConst[ViewConst["Start"] = 1001] = "Start";
+    ViewConst[ViewConst["GameView"] = 1001] = "GameView";
 })(ViewConst || (ViewConst = {}));
 //# sourceMappingURL=ViewConst.js.map

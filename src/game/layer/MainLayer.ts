@@ -16,6 +16,12 @@ class MainLayer{
      */
     public static UI_Main:BaseEuiLayer = new BaseEuiLayer();
     /**
+     * UI 小地图
+     * @type {BaseEuiLayer}
+     */
+    public static UI_MiniMap:BaseEuiLayer = new BaseEuiLayer();
+
+    /**
      * UI弹出框层
      * @type {BaseEuiLayer}
      */

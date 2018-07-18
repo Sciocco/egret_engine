@@ -103,6 +103,7 @@ var Main = (function (_super) {
      */
     Main.prototype.initModule = function () {
         App.ControllerManager.register(ViewConst.Loading, new LoadingController());
+        App.ControllerManager.register(ViewConst.GameView, new GameViewController());
     };
     return Main;
 }(egret.DisplayObjectContainer));

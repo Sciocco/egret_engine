@@ -80,4 +80,30 @@ class BaseController {
     public getControllerModel(controllerD:number):BaseModel {
         return App.ControllerManager.getControllerModel(controllerD);
     }
+    /**
+     * 消息派发
+     * @param type 消息id
+     * @param ...param  消息携带的参数
+     */
+    public dispatchEvent(type:string,...param:any[]): void {
+        App.NotificationCenter.dispatch(type,...param);
+    }
+    /**
+     * 消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    public addEventListener(type:string, listener:Function, listenerObj?:any):void {
+        App.NotificationCenter.addListener(type,listener,listenerObj || this);
+    }
+    /**
+     * 移除消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    public removeEventListener(type:string, listener:Function, listenerObj?:any):void {
+        App.NotificationCenter.removeListener(type,listener,listenerObj || this);
+    }
 }

@@ -109,6 +109,7 @@ class Main extends egret.DisplayObjectContainer {
      */
     private initModule(): void {
         App.ControllerManager.register(ViewConst.Loading, new LoadingController());
+        App.ControllerManager.register(ViewConst.GameView, new GameViewController());
     }
 }
 

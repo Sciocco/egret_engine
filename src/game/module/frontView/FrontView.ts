@@ -1,4 +1,4 @@
-class LoadingView extends BaseSpriteView {
+class FrontView extends BaseSpriteView {
     public constructor($controller:BaseController, $parent:egret.DisplayObjectContainer) {
         super($controller,$parent);
         this.init();

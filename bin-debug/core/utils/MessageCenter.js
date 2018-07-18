@@ -43,20 +43,25 @@ var MessageCenter = (function (_super) {
      *
      */
     MessageCenter.prototype.addListener = function (type, listener, listenerObj) {
-        var arr = this.dict[type];
-        if (arr == null) {
-            arr = new Array();
-            this.dict[type] = arr;
-        }
-        //检测是否已经存在
-        var i = 0;
-        var len = arr.length;
-        for (i; i < len; i++) {
-            if (arr[i][0] == listener && arr[i][1] == listenerObj) {
-                return;
+        try {
+            var arr = this.dict[type];
+            if (arr == null) {
+                arr = new Array();
+                this.dict[type] = arr;
             }
+            //检测是否已经存在
+            var i = 0;
+            var len = arr.length;
+            for (i; i < len; i++) {
+                if (arr[i][0] == listener && arr[i][1] == listenerObj) {
+                    return;
+                }
+            }
+            arr.push([listener, listenerObj]);
         }
-        arr.push([listener, listenerObj]);
+        catch (e) {
+            console.error(e);
+        }
     };
     /**
      * 移除消息监听
@@ -65,21 +70,26 @@ var MessageCenter = (function (_super) {
      * @param listenerObj 侦听函数所属对象
      */
     MessageCenter.prototype.removeListener = function (type, listener, listenerObj) {
-        var arr = this.dict[type];
-        if (arr == null) {
-            return;
-        }
-        var i = 0;
-        var len = arr.length;
-        for (i; i < len; i++) {
-            if (arr[i][0] == listener && arr[i][1] == listenerObj) {
-                arr.splice(i, 1);
-                break;
+        try {
+            var arr = this.dict[type];
+            if (arr == null) {
+                return;
+            }
+            var i = 0;
+            var len = arr.length;
+            for (i; i < len; i++) {
+                if (arr[i][0] == listener && arr[i][1] == listenerObj) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+            if (arr.length == 0) {
+                this.dict[type] = null;
+                delete this.dict[type];
             }
         }
-        if (arr.length == 0) {
-            this.dict[type] = null;
-            delete this.dict[type];
+        catch (e) {
+            console.error(e);
         }
     };
     /**
@@ -87,20 +97,25 @@ var MessageCenter = (function (_super) {
      * @param listenerObj 侦听函数所属对象
      */
     MessageCenter.prototype.removeAll = function (listenerObj) {
-        var keys = Object.keys(this.dict);
-        for (var i = 0, len = keys.length; i < len; i++) {
-            var type = keys[i];
-            var arr = this.dict[type];
-            for (var j = 0; j < arr.length; j++) {
-                if (arr[j][1] == listenerObj) {
-                    arr.splice(j, 1);
-                    j--;
+        try {
+            var keys = Object.keys(this.dict);
+            for (var i = 0, len = keys.length; i < len; i++) {
+                var type = keys[i];
+                var arr = this.dict[type];
+                for (var j = 0; j < arr.length; j++) {
+                    if (arr[j][1] == listenerObj) {
+                        arr.splice(j, 1);
+                        j--;
+                    }
+                }
+                if (arr.length == 0) {
+                    this.dict[type] = null;
+                    delete this.dict[type];
                 }
             }
-            if (arr.length == 0) {
-                this.dict[type] = null;
-                delete this.dict[type];
-            }
+        }
+        catch (e) {
+            console.error(e);
         }
     };
     /**
@@ -117,17 +132,22 @@ var MessageCenter = (function (_super) {
         if (this.dict[type] == null) {
             return;
         }
-        var vo = ObjectPool.pop("MessageVo");
-        vo.type = type;
-        vo.param = param;
-        if (this.type == 0) {
-            this.eVec.push(vo);
+        try {
+            var vo = ObjectPool.pop("MessageVo");
+            vo.type = type;
+            vo.param = param;
+            if (this.type == 0) {
+                this.eVec.push(vo);
+            }
+            else if (this.type == 1) {
+                this.dealMsg(vo);
+            }
+            else {
+                Log.trace("MessageCenter未实现的类型");
+            }
         }
-        else if (this.type == 1) {
-            this.dealMsg(vo);
-        }
-        else {
-            Log.trace("MessageCenter未实现的类型");
+        catch (e) {
+            console.error(e);
         }
     };
     /**
@@ -135,21 +155,26 @@ var MessageCenter = (function (_super) {
      *
      */
     MessageCenter.prototype.run = function () {
-        var currTime = egret.getTimer();
-        var inSleep = currTime - this.lastRunTime > 100;
-        this.lastRunTime = currTime;
-        if (inSleep) {
-            while (this.eVec.length > 0) {
-                this.dealMsg(this.eVec.shift());
-            }
-        }
-        else {
-            while (this.eVec.length > 0) {
-                this.dealMsg(this.eVec.shift());
-                if ((egret.getTimer() - currTime) > 5) {
-                    break;
+        try {
+            var currTime = egret.getTimer();
+            var inSleep = currTime - this.lastRunTime > 100;
+            this.lastRunTime = currTime;
+            if (inSleep) {
+                while (this.eVec.length > 0) {
+                    this.dealMsg(this.eVec.shift());
                 }
             }
+            else {
+                while (this.eVec.length > 0) {
+                    this.dealMsg(this.eVec.shift());
+                    if ((egret.getTimer() - currTime) > 5) {
+                        break;
+                    }
+                }
+            }
+        }
+        catch (e) {
+            console.error(e);
         }
     };
     /**
@@ -157,21 +182,26 @@ var MessageCenter = (function (_super) {
      * @param msgVo
      */
     MessageCenter.prototype.dealMsg = function (msgVo) {
-        var listeners = this.dict[msgVo.type];
-        var i = 0;
-        var len = listeners.length;
-        var listener = null;
-        while (i < len) {
-            listener = listeners[i];
-            listener[0].apply(listener[1], msgVo.param);
-            if (listeners.length != len) {
-                len = listeners.length;
-                i--;
+        try {
+            var listeners = this.dict[msgVo.type];
+            var i = 0;
+            var len = listeners.length;
+            var listener = null;
+            while (i < len) {
+                listener = listeners[i];
+                listener[0].apply(listener[1], msgVo.param);
+                if (listeners.length != len) {
+                    len = listeners.length;
+                    i--;
+                }
+                i++;
             }
-            i++;
+            msgVo.dispose();
+            ObjectPool.push(msgVo);
         }
-        msgVo.dispose();
-        ObjectPool.push(msgVo);
+        catch (e) {
+            console.error(e);
+        }
     };
     return MessageCenter;
 }(BaseClass));

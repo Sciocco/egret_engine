@@ -21,40 +21,6 @@ var BaseController = (function () {
         this._messages[key] = [callbackFunc, callbackObj];
     };
     /**
-     * 触发本模块消息
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    BaseController.prototype.applyFunc = function (key) {
-        var param = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            param[_i - 1] = arguments[_i];
-        }
-        var listen = this._messages[key];
-        if (listen) {
-            return listen[0].apply(listen[1], param);
-        }
-        else {
-            Log.trace("消息" + key + "不存在侦听");
-            return null;
-        }
-    };
-    /**
-     * 触发其他模块消息
-     * @param controllerKey 模块标识
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    BaseController.prototype.applyControllerFunc = function (controllerKey, key) {
-        var param = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            param[_i - 2] = arguments[_i];
-        }
-        return App.ControllerManager.applyFunc.apply(App.ControllerManager, arguments);
-    };
-    /**
      * 设置该模块使用的Model对象
      * @param model
      */
@@ -81,7 +47,7 @@ var BaseController = (function () {
      * @param type 消息id
      * @param ...param  消息携带的参数
      */
-    BaseController.prototype.dispatchEvent = function (type) {
+    BaseController.prototype.dispatchMessage = function (type) {
         var param = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             param[_i - 1] = arguments[_i];
@@ -95,7 +61,7 @@ var BaseController = (function () {
      * @param listener 侦听函数
      * @param listenerObj 侦听函数所属对象
      */
-    BaseController.prototype.addEventListener = function (type, listener, listenerObj) {
+    BaseController.prototype.addMessageListener = function (type, listener, listenerObj) {
         App.NotificationCenter.addListener(type, listener, listenerObj || this);
     };
     /**
@@ -104,7 +70,7 @@ var BaseController = (function () {
      * @param listener 侦听函数
      * @param listenerObj 侦听函数所属对象
      */
-    BaseController.prototype.removeEventListener = function (type, listener, listenerObj) {
+    BaseController.prototype.removeMessageListener = function (type, listener, listenerObj) {
         App.NotificationCenter.removeListener(type, listener, listenerObj || this);
     };
     return BaseController;

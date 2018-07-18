@@ -55,23 +55,6 @@ interface IBaseView {
     destroy():void;
 
     /**
-     * 触发本模块消息
-     * @param key 唯一标识
-     * @param param 参数
-     *
-     */
-    applyFunc(key:any, ...param:any[]):any;
-
-    /**
-     * 触发其他模块消息
-     * @param controllerKey 模块标识
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    applyControllerFunc(controllerKey:number, key:any, ...param:any[]):any;
-
-    /**
      * 设置是否隐藏
      * @param value
      */
@@ -87,4 +70,25 @@ interface IBaseView {
      * 分模块加载资源
      */
     loadResource(loadComplete:Function, initComplete:Function):void;
+
+        /**
+     * 消息派发
+     * @param type 消息id
+     * @param ...param  消息携带的参数
+     */
+    dispatchMessage(type:string,...param:any[]): void;
+    /**
+     * 消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    addMessageListener(type:string, listener:Function, listenerObj?:any):void;
+    /**
+     * 移除消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    removeMessageListener(type:string, listener:Function, listenerObj?:any):void;
 }

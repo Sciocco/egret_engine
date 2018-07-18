@@ -39,7 +39,7 @@ class Main extends egret.DisplayObjectContainer {
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
 
         //适配方式(全屏适配)
-        App.StageUtils.startFullscreenAdaptation(650, 1000, this.onResize);
+        App.StageUtils.startFullscreenAdaptation(640, 1136, this.onResize);
 
         //初始化
         this.initLifecycle();
@@ -65,6 +65,7 @@ class Main extends egret.DisplayObjectContainer {
 
     private onResize(): void {
         // 窗口大小改变事件
+        // App.ControllerManager.applyFunc(ControllerConst, GameResize);
     }
 
     private loadResConfig(): void {
@@ -90,13 +91,12 @@ class Main extends egret.DisplayObjectContainer {
         //模块初始化
         this.initModule();
 
-        //设置加载进度界面
         App.SceneManager.runScene(SceneConsts.GameScene);
         //开启游戏
 
     }
 
-    /**
+    /** 
      * 初始化所有场景
      */
     private initScene(): void {
@@ -108,7 +108,7 @@ class Main extends egret.DisplayObjectContainer {
      * 初始化所有模块
      */
     private initModule(): void {
-        App.ControllerManager.register(ViewConst.Loading, new LoadingController());
+        App.ControllerManager.register(ViewConst.Front, new FrontController());
         App.ControllerManager.register(ViewConst.GameView, new GameViewController());
     }
 }

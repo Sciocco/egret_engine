@@ -26,12 +26,11 @@ var GameScene = (function (_super) {
         this.addLayer(MainLayer.UI_Tips);
         //添加一个纯色背景
         var rect = new eui.Rect();
-        rect.fillColor = 0xfff;
+        rect.fillColor = 0xffffff;
         rect.percentHeight = 100;
         rect.percentWidth = 100;
         MainLayer.UI_Main.addChild(rect);
-        //初始打开Loading页面
-        App.ViewManager.open(ViewConst.Loading);
+        App.ViewManager.open(ViewConst.Front);
         // 打开UI 界面
     };
     return GameScene;

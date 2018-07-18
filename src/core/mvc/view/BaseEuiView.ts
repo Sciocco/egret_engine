@@ -47,27 +47,6 @@ class BaseEuiView extends eui.Component implements IBaseView {
     }
 
     /**
-     * 触发本模块消息
-     * @param key 唯一标识
-     * @param param 参数
-     *
-     */
-    public applyFunc(key:any, ...param:any[]):any {
-        return this._controller.applyFunc.apply(this._controller, arguments);
-    }
-
-    /**
-     * 触发其他模块消息
-     * @param controllerKey 模块标识
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    public applyControllerFunc(controllerKey:number, key:any, ...param:any[]):any {
-        return this._controller.applyControllerFunc.apply(this._controller, arguments);
-    }
-
-    /**
      * 面板是否显示
      * @return
      *
@@ -152,5 +131,31 @@ class BaseEuiView extends eui.Component implements IBaseView {
      */
     public setVisible(value:boolean):void {
         this.visible = value;
+    }
+        /**
+     * 消息派发
+     * @param type 消息id
+     * @param ...param  消息携带的参数
+     */
+    public dispatchMessage(type:string,...param:any[]): void {
+        App.NotificationCenter.dispatch(type,...param);
+    }
+    /**
+     * 消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    public addMessageListener(type:string, listener:Function, listenerObj?:any):void {
+        App.NotificationCenter.addListener(type,listener,listenerObj || this);
+    }
+    /**
+     * 移除消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    public removeMessageListener(type:string, listener:Function, listenerObj?:any):void {
+        App.NotificationCenter.removeListener(type,listener,listenerObj || this);
     }
 }

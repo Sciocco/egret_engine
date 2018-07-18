@@ -29,32 +29,6 @@ class BaseController {
         this._messages[key] = [callbackFunc, callbackObj];
     }
 
-    /**
-     * 触发本模块消息
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    public applyFunc(key:any, ...param:any[]):any {
-        var listen:any = this._messages[key];
-        if (listen) {
-            return listen[0].apply(listen[1], param);
-        } else {
-            Log.trace("消息" + key + "不存在侦听");
-            return null;
-        }
-    }
-
-    /**
-     * 触发其他模块消息
-     * @param controllerKey 模块标识
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    public applyControllerFunc(controllerKey:number, key:any, ...param:any[]):any {
-        return App.ControllerManager.applyFunc.apply(App.ControllerManager, arguments);
-    }
 
     /**
      * 设置该模块使用的Model对象
@@ -85,7 +59,7 @@ class BaseController {
      * @param type 消息id
      * @param ...param  消息携带的参数
      */
-    public dispatchEvent(type:string,...param:any[]): void {
+    public dispatchMessage(type:string,...param:any[]): void {
         App.NotificationCenter.dispatch(type,...param);
     }
     /**
@@ -94,7 +68,7 @@ class BaseController {
      * @param listener 侦听函数
      * @param listenerObj 侦听函数所属对象
      */
-    public addEventListener(type:string, listener:Function, listenerObj?:any):void {
+    public addMessageListener(type:string, listener:Function, listenerObj?:any):void {
         App.NotificationCenter.addListener(type,listener,listenerObj || this);
     }
     /**
@@ -103,7 +77,7 @@ class BaseController {
      * @param listener 侦听函数
      * @param listenerObj 侦听函数所属对象
      */
-    public removeEventListener(type:string, listener:Function, listenerObj?:any):void {
+    public removeMessageListener(type:string, listener:Function, listenerObj?:any):void {
         App.NotificationCenter.removeListener(type,listener,listenerObj || this);
     }
 }

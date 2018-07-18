@@ -12,6 +12,7 @@ var GameViewController = (function (_super) {
     __extends(GameViewController, _super);
     function GameViewController() {
         var _this = _super.call(this) || this;
+        _this.gameModel = new GameModel(_this);
         _this.gameViewProxy = new GameViewProxy(_this);
         _this.gameView = new GameView(_this, MainLayer.Game_Main);
         App.ViewManager.register(ViewConst.GameView, _this.gameView);

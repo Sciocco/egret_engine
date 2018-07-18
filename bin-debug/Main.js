@@ -47,7 +47,7 @@ var Main = (function (_super) {
         egret.registerImplementation("eui.IAssetAdapter", new AssetAdapter());
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
         //适配方式(全屏适配)
-        App.StageUtils.startFullscreenAdaptation(650, 1000, this.onResize);
+        App.StageUtils.startFullscreenAdaptation(640, 1136, this.onResize);
         //初始化
         this.initLifecycle();
         this.initScene();
@@ -67,6 +67,7 @@ var Main = (function (_super) {
     };
     Main.prototype.onResize = function () {
         // 窗口大小改变事件
+        // App.ControllerManager.applyFunc(ControllerConst, GameResize);
     };
     Main.prototype.loadResConfig = function () {
         //初始化Resource资源加载库
@@ -87,7 +88,6 @@ var Main = (function (_super) {
     Main.prototype.onThemeLoadComplete = function () {
         //模块初始化
         this.initModule();
-        //设置加载进度界面
         App.SceneManager.runScene(SceneConsts.GameScene);
         //开启游戏
     };
@@ -102,7 +102,7 @@ var Main = (function (_super) {
      * 初始化所有模块
      */
     Main.prototype.initModule = function () {
-        App.ControllerManager.register(ViewConst.Loading, new LoadingController());
+        App.ControllerManager.register(ViewConst.Front, new FrontController());
         App.ControllerManager.register(ViewConst.GameView, new GameViewController());
     };
     return Main;

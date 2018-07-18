@@ -13,33 +13,6 @@ var BaseProxy = (function () {
         this._controller = $controller;
     }
     /**
-     * 触发本模块消息
-     * @param key 唯一标识
-     * @param param 参数
-     *
-     */
-    BaseProxy.prototype.applyFunc = function (key) {
-        var param = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            param[_i - 1] = arguments[_i];
-        }
-        return this._controller.applyFunc.apply(this._controller, arguments);
-    };
-    /**
-     * 触发其他模块消息
-     * @param controllerKey 模块标识
-     * @param key 唯一标识
-     * @param param 所需参数
-     *
-     */
-    BaseProxy.prototype.applyControllerFunc = function (controllerKey, key) {
-        var param = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            param[_i - 2] = arguments[_i];
-        }
-        return this._controller.applyControllerFunc.apply(this._controller, arguments);
-    };
-    /**
      * 注册从服务器返回消息的监听
      * @param key 消息标识
      * @param callbackFunc 处理函数
@@ -129,6 +102,37 @@ var BaseProxy = (function () {
         var param = JSON.stringify(paramObj);
         var variables = new egret.URLVariables("data=" + param + "&h=" + App.ProxyUserFlag);
         return variables;
+    };
+    /**
+ * 消息派发
+ * @param type 消息id
+ * @param ...param  消息携带的参数
+ */
+    BaseProxy.prototype.dispatchMessage = function (type) {
+        var param = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            param[_i - 1] = arguments[_i];
+        }
+        (_a = App.NotificationCenter).dispatch.apply(_a, [type].concat(param));
+        var _a;
+    };
+    /**
+     * 消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    BaseProxy.prototype.addMessageListener = function (type, listener, listenerObj) {
+        App.NotificationCenter.addListener(type, listener, listenerObj || this);
+    };
+    /**
+     * 移除消息侦听
+     * @param type 消息id
+     * @param listener 侦听函数
+     * @param listenerObj 侦听函数所属对象
+     */
+    BaseProxy.prototype.removeMessageListener = function (type, listener, listenerObj) {
+        App.NotificationCenter.removeListener(type, listener, listenerObj || this);
     };
     return BaseProxy;
 }());

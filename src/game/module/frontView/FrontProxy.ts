@@ -1,4 +1,4 @@
-class LoadingProxy extends BaseProxy {
+class FrontProxy extends BaseProxy {
     public constructor($controller:BaseController){
         super($controller);
     }

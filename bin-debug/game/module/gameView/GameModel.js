@@ -8,12 +8,16 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var LoadingProxy = (function (_super) {
-    __extends(LoadingProxy, _super);
-    function LoadingProxy($controller) {
+var GameModel = (function (_super) {
+    __extends(GameModel, _super);
+    /**
+     * 构造函数
+     * @param $controller 所属模块
+     */
+    function GameModel($controller) {
         return _super.call(this, $controller) || this;
     }
-    return LoadingProxy;
-}(BaseProxy));
-__reflect(LoadingProxy.prototype, "LoadingProxy");
-//# sourceMappingURL=LoadingProxy.js.map
+    return GameModel;
+}(BaseModel));
+__reflect(GameModel.prototype, "GameModel");
+//# sourceMappingURL=GameModel.js.map

@@ -1,4 +1,3 @@
-
 class Keyboard {
     public static LEFT:number = 37;
     public static RIGHT:number = 39;

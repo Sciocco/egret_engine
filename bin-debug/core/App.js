@@ -136,26 +136,6 @@ var App = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(App, "BitmapNumber", {
-        /*
-         * 图片合成数字工具类
-         * */
-        get: function () {
-            return BitmapNumber.getInstance();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(App, "GuideUtils", {
-        /**
-         * 引导工具类
-         */
-        get: function () {
-            return GuideUtils.getInstance();
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(App, "StageUtils", {
         /**
          * Stage操作相关工具类
@@ -340,18 +320,6 @@ var App = (function () {
          */
         get: function () {
             return DragonBonesFactory.getInstance();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(App, "StarlingSwfFactory", {
-        /**
-         * StarlingSwf工厂类
-         * @returns {StarlingSwfFactory}
-         * @constructor
-         */
-        get: function () {
-            return StarlingSwfFactory.getInstance();
         },
         enumerable: true,
         configurable: true

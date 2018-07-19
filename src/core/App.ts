@@ -112,19 +112,6 @@ class App {
         return DisplayUtils.getInstance();
     }
 
-    /*
-     * 图片合成数字工具类
-     * */
-    public static get BitmapNumber(): BitmapNumber {
-        return BitmapNumber.getInstance();
-    }
-
-    /**
-     * 引导工具类
-     */
-    public static get GuideUtils(): GuideUtils {
-        return GuideUtils.getInstance();
-    }
 
     /**
      * Stage操作相关工具类
@@ -264,15 +251,6 @@ class App {
      */
     public static get DragonBonesFactory(): DragonBonesFactory {
         return DragonBonesFactory.getInstance();
-    }
-
-    /**
-     * StarlingSwf工厂类
-     * @returns {StarlingSwfFactory}
-     * @constructor
-     */
-    public static get StarlingSwfFactory(): StarlingSwfFactory {
-        return StarlingSwfFactory.getInstance();
     }
 
     /**
